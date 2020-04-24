@@ -9,11 +9,8 @@ agent any
 				}
 			}
 			stage('Deployment Stage'){
-				steps{
-					withMaven(maven : 'apache-maven-3.6.3'){
-						sh 'mvn deploy'
-					}
-				}
+				def myhome = tool name: 'apache-maven-3.6.3', type: 'maven'
+				sh"${myhome}/bim/mvn package"
 			}
 	}
 
