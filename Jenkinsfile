@@ -4,7 +4,7 @@ agent any
 			stage('Compile Stage'){
 				steps{
 					withMaven(maven : 'apache-maven-3.6.3'){
-						sh 'mvn package'
+						sh 'mvn clean install'
 					}
 				}
 			}
