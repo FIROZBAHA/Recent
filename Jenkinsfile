@@ -1,20 +1,19 @@
-pipeline {
-agent any
-	stages{
-			stage('Compile Stage'){
-				steps{
-					withMaven(maven : 'apache-maven-3.6.3'){
-						sh 'mvn package'
-					}
-				}
-			}
-			stage('Deployment Stage'){
-				steps{
-					withMaven(maven : 'apache-maven-3.6.3'){
-						sh 'mvn deploy'
-					}
-				}
-			}
-	}
-
-}
+node
+{
+   
+    stage("SCM Checkout")
+    {
+        git url: 'https://github.com/FIROZBAHA/Recent.git'
+    }
+    stage("Maveen Build")
+    {
+       def mvnHome = tool name: 'Maveen', type: 'maven'
+       env.JAVA_HOME = tool name: 'JDK', type: 'jdk'
+       bat "\"${mvnHome}\"\\bin\\mvn -B verify"
+            }
+      stage('Archiving Artifacts')
+            {
+            archiveArtifacts artifacts: "target/*.jar", onlyIfSuccessful: true
+               
+            }
+    }
